@@ -79,7 +79,7 @@ func Job() {
 			log.Fatal("error converting the returned gas price from a string to an integer")
 		}
 
-		if intGas < 120 && intGas > 60 {
+		if intGas < 80 && intGas > 60 {
 			newTweet := BuildTweet(gas)
 			fmt.Printf("Gas is currently %s gwei", gas)
 			SendTweet(newTweet)
