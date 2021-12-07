@@ -2,6 +2,7 @@ module gasbot
 
 go 1.17
 
+// +heroku goVersion go1.17
 require (
 	github.com/dghubble/go-twitter v0.0.0-20211115160449-93a8679adecb
 	github.com/dghubble/oauth1 v0.7.0
