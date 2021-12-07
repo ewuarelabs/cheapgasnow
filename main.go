@@ -70,7 +70,7 @@ func BuildTweet(price string) string {
 
 func Job() {
 	c := cron.New()
-	c.AddFunc("@every 10m", func() {
+	c.AddFunc("@every 30s", func() {
 		fmt.Println("starting Job!")
 		gas := GetGas()
 
