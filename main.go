@@ -9,6 +9,7 @@ import (
 	"os"
 	"strconv"
 	"time"
+	"math"
 
 	"github.com/dghubble/go-twitter/twitter"
 	"github.com/dghubble/oauth1"
@@ -18,6 +19,7 @@ import (
 )
 
 const URL = "https://api.etherscan.io/api?module=gastracker&action=gasoracle&apikey="
+var lastGas int
 
 func GetGas() string {
 
@@ -74,16 +76,29 @@ func Job() {
 		fmt.Println("starting Job!")
 		gas := GetGas()
 
+		counter := 0
+
 		intGas, err := strconv.Atoi(gas)
 		if err != nil {
 			log.Fatal("error converting the returned gas price from a string to an integer")
 		}
 
-		if intGas < 80 && intGas > 30 {
+		if intGas < 80 && intGas > 30 && counter == 0 {
+			lastGas = intGas
 			newTweet := BuildTweet(gas)
 			fmt.Printf("Gas is currently %s gwei", gas)
 			SendTweet(newTweet)
+			counter ++
 			time.Sleep(5 * time.Second)
+
+		} else if counter > 0 && intGas < 80 && intGas > 30 {
+			percentage := ((lastGas - intGas) / lastGas) * 100
+			if math.Abs(float64(percentage)) > 7.00 {
+				deviatedTweet := fmt.Sprintf("gas prices have deviated significantly from the last price, the current gas price is %v gwei" , intGas )
+				SendTweet(deviatedTweet)
+			}
+			counter = 0
+			fmt.Printf("Gas is currently %s gwei\n", gas)
 		}
 		fmt.Printf("Gas is currently %s gwei\n", gas)
 	})
