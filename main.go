@@ -99,7 +99,7 @@ func Job() {
 				counter = 0
 				fmt.Printf("Gas is currently %s gwei\n", gas)
 			}
-			fmt.Printf("no significant deviation yet at %v gwei\n", intGas)
+			fmt.Printf("No significant deviation yet at %v gwei\n", intGas)
 		}
 		fmt.Printf("Gas is currently %s gwei\n", gas)
 	})
