@@ -78,7 +78,6 @@ func Job() {
 		fmt.Println("starting Job!")
 		gas := GetGas()
 
-
 		intGas, err := strconv.Atoi(gas)
 		if err != nil {
 			log.Fatal("error converting the returned gas price from a string to an integer")
@@ -97,9 +96,10 @@ func Job() {
 			if math.Abs(float64(percentage)) > 7.00 {
 				deviatedTweet := fmt.Sprintf("gas prices have deviated significantly from the last price, the current gas price is %v gwei", intGas)
 				SendTweet(deviatedTweet)
+				counter = 0
+				fmt.Printf("Gas is currently %s gwei\n", gas)
 			}
-			counter = 0
-			fmt.Printf("Gas is currently %s gwei\n", gas)
+			fmt.Printf("no significant deiation yet at %v gwei", intGas)
 		}
 		fmt.Printf("Gas is currently %s gwei\n", gas)
 	})
