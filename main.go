@@ -21,6 +21,7 @@ import (
 const URL = "https://api.etherscan.io/api?module=gastracker&action=gasoracle&apikey="
 
 var lastGas int
+var counter = 0
 
 func GetGas() string {
 
@@ -77,7 +78,6 @@ func Job() {
 		fmt.Println("starting Job!")
 		gas := GetGas()
 
-		counter := 0
 
 		intGas, err := strconv.Atoi(gas)
 		if err != nil {
