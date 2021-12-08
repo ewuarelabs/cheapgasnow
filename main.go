@@ -90,7 +90,7 @@ func Job() {
 		if intGas < 80 && intGas > 30 && counter == 0 {
 			lastGas = intGas
 			newTweet := BuildTweet(gas)
-			fmt.Printf("Gas is currently %s gwei", gas)
+			fmt.Printf("Sent tweet for %s gwei", gas)
 			SendTweet(newTweet)
 			counter++
 			time.Sleep(5 * time.Second)
@@ -101,7 +101,8 @@ func Job() {
 				deviatedTweet := fmt.Sprintf("gas prices have deviated significantly from the last price, the current gas price is %v gwei", intGas)
 				SendTweet(deviatedTweet)
 				counter = 0
-				fmt.Printf("Gas is currently %s gwei\n", gas)
+				lastGas = intGas
+				fmt.Printf("Sent tweet for %s gwei\n", gas)
 			}
 			fmt.Printf("No significant deviation yet at %v gwei\n", intGas)
 		}
@@ -124,11 +125,10 @@ func SendTweet(gastweet string) {
 	log.Println(&httpClient)
 	// twitter client
 	client := twitter.NewClient(httpClient)
-	log.Println(client)
 
 	tweet, resp, err := client.Statuses.Update(gastweet, nil)
-	fmt.Println(*resp)
-	fmt.Println(*tweet)
+	fmt.Println(resp)
+	fmt.Println(tweet)
 	if err != nil {
 		log.Println(err)
 	}
