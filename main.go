@@ -97,7 +97,7 @@ func Job() {
 
 		} else if counter > 0 && intGas < 100 && intGas > 30 {
 			percentage := (float64(intGas - lastGas) / float64(lastGas)) * 100
-			if math.Abs(float64(percentage)) > 15.00 {
+			if math.Abs(float64(percentage)) > 25.00 {
 				deviatedTweet := fmt.Sprintf("gas prices have deviated significantly from the last price, the current gas price is %v gwei", intGas)
 				SendTweet(deviatedTweet)
 				counter = 0
