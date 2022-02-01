@@ -101,7 +101,7 @@ func Job() {
 				deviatedTweet := fmt.Sprintf("gas prices have deviated significantly from the last price, the current gas price is %v gwei", intGas)
 				SendTweet(deviatedTweet)
 				counter = 0
-				lastGas = intGas
+				lastGas = *intGas
 				fmt.Printf("Sent tweet for %s gwei\n", gas)
 			}
 			fmt.Printf("No significant deviation yet at %v gwei\n", intGas)
