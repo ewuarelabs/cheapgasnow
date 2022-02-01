@@ -20,7 +20,7 @@ import (
 
 const URL = "https://api.etherscan.io/api?module=gastracker&action=gasoracle&apikey="
 
-var lastGas int
+var lastGas *int
 var counter = 0
 
 func GetGas() string {
@@ -88,7 +88,7 @@ func Job() {
 		}
 
 		if intGas < 80 && intGas > 30 && counter == 0 {
-			lastGas = intGas
+			lastGas = &intGas
 			newTweet := BuildTweet(gas)
 			fmt.Printf("Sent tweet for %s gwei", gas)
 			SendTweet(newTweet)
@@ -96,12 +96,13 @@ func Job() {
 			time.Sleep(5 * time.Second)
 
 		} else if counter > 0 && intGas < 100 && intGas > 30 {
-			percentage := (float64(intGas - lastGas) / float64(lastGas)) * 100
+			calcGas := *lastGas
+			percentage := (float64(intGas - calcGas) / float64(calcGas)) * 100
 			if math.Abs(float64(percentage)) > 25.00 {
 				deviatedTweet := fmt.Sprintf("gas prices have deviated significantly from the last price, the current gas price is %v gwei", intGas)
 				SendTweet(deviatedTweet)
 				counter = 0
-				lastGas = *intGas
+				lastGas = &intGas
 				fmt.Printf("Sent tweet for %s gwei\n", gas)
 			}
 			fmt.Printf("No significant deviation yet at %v gwei\n", intGas)
