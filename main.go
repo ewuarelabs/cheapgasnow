@@ -73,7 +73,7 @@ func BuildTweet(price string) string {
 
 func Job() {
 	c := cron.New()
-	c.AddFunc("@every 900s", func() {
+	c.AddFunc("@every 910s", func() {
 		counter = 0
 		fmt.Println("counter reset to 0")
 	})
