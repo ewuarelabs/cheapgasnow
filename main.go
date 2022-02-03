@@ -77,7 +77,7 @@ func Job() {
 		counter = 0
 		fmt.Println("counter reset to 0")
 	})
-	c.AddFunc("@every 30s", func() {
+	c.AddFunc("@every 60s", func() {
 		fmt.Println("starting Job!")
 		gas := GetGas()
 
@@ -91,10 +91,8 @@ func Job() {
 			newTweet := BuildTweet(gas)
 			fmt.Printf("Sent tweet for %s gwei", gas)
 			SendTweet(newTweet)
-			counter++
-			time.Sleep(5 * time.Second)
-
-		} else if counter > 0 && intGas < 100 && intGas > 30 {
+			counter = 1
+		} else if counter == 1 && intGas < 100 && intGas > 30 {
 			derefGasPrice := *lastGas
 			percentage := (float64(intGas - derefGasPrice) / float64(derefGasPrice)) * 100
 			if float64(percentage) <= -25.00 {
